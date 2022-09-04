@@ -1,58 +1,51 @@
 import Component from './core/Component';
+import InputField from './components/InputField';
 
 export default class App extends Component {
-  INPUT_NUMBER_LENGTH = 3;
-
   template() {
     return `
-      <div id='input-container'>
-        <input 
-          type='number'
-          id='input-field'
-          placeholder='1~9까지의 숫자를 중복없이 3개 입력해주세요.'
-        />
-        <button
-          type='button'
-          id='input-button'
-          disabled=true
-        >
-          입력
-        </button>
-      </div>
+      <div id='input-container'></div>
     `;
   }
 
-  setEvent() {
-    const inputField = document.getElementById('input-field');
-    const inputButton = document.getElementById('input-button');
+  mounted() {
+    const inputContainer = document.getElementById('input-container');
+    new InputField(inputContainer, {
+      handleOnInput: this.handleOnInput.bind(this),
+      handleClick: this.handleClick.bind(this),
+    });
+  }
 
-    const checkButtonDisabled = (inputLength) => {
-      if (inputLength === this.INPUT_NUMBER_LENGTH) {
-        inputButton.disabled = false;
-      } else {
-        inputButton.disabled = true;
-      }
-    };
+  MAX_INPUT_LENGTH = 3;
 
-    const checkInputValidation = ({ value, currentInput, previousInput }) => {
-      if (value.length > this.INPUT_NUMBER_LENGTH
-          || previousInput.includes(currentInput)
-          || currentInput === '0'
-      ) { inputField.value = previousInput; }
-    };
+  checkButtonDisabled($inputButton, inputLength) {
+    if (inputLength === this.MAX_INPUT_LENGTH) {
+      $inputButton.disabled = false;
+      return;
+    }
+    $inputButton.disabled = true;
+  }
 
-    const handleOnInput = () => {
-      const { value } = inputField;
-      const currentInput = inputField.value.substr(-1);
-      const previousInput = value.substr(0, value.length - 1);
+  checkInputValidation($inputField, currentInput, previousInput) {
+    const { value } = $inputField;
+    if (!parseInt(currentInput, 10)
+        || value.length > this.MAX_INPUT_LENGTH
+        || previousInput.includes(currentInput)
+        || currentInput === '0'
+    ) { $inputField.value = previousInput; }
+  }
 
-      checkInputValidation({ value, currentInput, previousInput });
-      checkButtonDisabled(inputField.value.length);
-    };
+  handleOnInput($inputField, $inputButton) {
+    const { value } = $inputField;
+    const currentInput = value.substr(-1);
+    const previousInput = value.substr(0, value.length - 1);
 
-    const handleClick = () => {};
+    this.checkInputValidation($inputField, currentInput, previousInput);
+    this.checkButtonDisabled($inputButton, value.length);
+  }
 
-    inputField.addEventListener('input', handleOnInput);
-    inputButton.addEventListener('click', handleClick);
+  handleClick(value) {
+    const newState = { numbers: [...this.state.numbers, value] };
+    this.setState(newState);
   }
 }
