@@ -1,18 +1,38 @@
 import Component from './core/Component';
 import InputField from './components/InputField';
+import History from './components/History';
+
+import randomNumber from './services/randomNumber';
+import calculate from './services/calculate';
 
 export default class App extends Component {
   template() {
     return `
       <div id='input-container'></div>
+      <table id='history-table'></table>
     `;
+  }
+
+  initialize() {
+    this.state = {
+      answer: randomNumber(),
+      numbers: [],
+      results: [],
+    };
   }
 
   mounted() {
     const inputContainer = document.getElementById('input-container');
+    const historyTable = document.getElementById('history-table');
+    const { numbers, results } = this.state;
+
     new InputField(inputContainer, {
       handleOnInput: this.handleOnInput.bind(this),
       handleClick: this.handleClick.bind(this),
+    });
+    new History(historyTable, {
+      numbers,
+      results,
     });
   }
 
@@ -45,7 +65,11 @@ export default class App extends Component {
   }
 
   handleClick(value) {
-    const newState = { numbers: [...this.state.numbers, value] };
+    const newResult = calculate(value);
+    const newState = {
+      numbers: [...this.state.numbers, value],
+      results: [...this.state.results, newResult],
+    };
     this.setState(newState);
   }
 }
