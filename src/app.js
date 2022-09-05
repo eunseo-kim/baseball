@@ -65,7 +65,7 @@ export default class App extends Component {
   }
 
   handleClick(value) {
-    const newResult = calculate(value);
+    const newResult = calculate(this.state.answer, value);
     const newState = {
       numbers: [...this.state.numbers, value],
       results: [...this.state.results, newResult],
