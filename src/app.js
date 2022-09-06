@@ -39,7 +39,7 @@ export default class App extends Component {
   MAX_INPUT_LENGTH = 3;
 
   checkButtonDisabled($inputButton, inputLength) {
-    if (inputLength === this.MAX_INPUT_LENGTH) {
+    if (inputLength >= this.MAX_INPUT_LENGTH) {
       $inputButton.disabled = false;
       return;
     }
