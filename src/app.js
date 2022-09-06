@@ -1,6 +1,7 @@
 import Component from './core/Component';
 import InputField from './components/InputField';
 import History from './components/History';
+import StartGame from './components/StartGame';
 
 import randomNumber from './services/randomNumber';
 import calculate from './services/calculate';
@@ -8,13 +9,17 @@ import calculate from './services/calculate';
 export default class App extends Component {
   template() {
     return `
-      <div id='input-container'></div>
-      <table id='history-table'></table>
+      <div id='game-container'>
+        <div id='start-game'></div>
+        <div id='input-container'></div>
+        <table id='table-container'></table>
+      </div>
     `;
   }
 
   initialize() {
     this.state = {
+      gameStarted: false,
       answer: randomNumber(),
       numbers: [],
       results: [],
@@ -22,17 +27,28 @@ export default class App extends Component {
   }
 
   mounted() {
+    const { gameStarted } = this.state;
+
+    const startGame = document.getElementById('start-game');
+    const gameContainer = document.getElementById('game-container');
     const inputContainer = document.getElementById('input-container');
-    const historyTable = document.getElementById('history-table');
+    const tableContainer = document.getElementById('table-container');
     const { numbers, results } = this.state;
 
-    new InputField(inputContainer, {
-      handleOnInput: this.handleOnInput.bind(this),
-      handleClick: this.handleClick.bind(this),
-    });
-    new History(historyTable, {
-      numbers,
-      results,
+    if (gameStarted) {
+      new InputField(inputContainer, {
+        handleOnInput: this.handleOnInput.bind(this),
+        handleClick: this.handleClick.bind(this),
+      });
+      new History(tableContainer, {
+        numbers,
+        results,
+      });
+      return;
+    }
+
+    new StartGame(startGame, {
+      startGame: this.startGame.bind(this),
     });
   }
 
@@ -70,6 +86,11 @@ export default class App extends Component {
       numbers: [...this.state.numbers, value],
       results: [...this.state.results, newResult],
     };
+    this.setState(newState);
+  }
+
+  startGame() {
+    const newState = { gameStarted: true };
     this.setState(newState);
   }
 }
