@@ -3,7 +3,6 @@ import Component from '../core/Component';
 export default class InputField extends Component {
   template() {
     return `
-    <div id='input-container'>
       <input 
         id='input-field'
         placeholder='1~9까지의 숫자를 중복없이 3개 입력해주세요.'
@@ -15,7 +14,6 @@ export default class InputField extends Component {
       >
       입력
       </button>
-    </div>
     `;
   }
 

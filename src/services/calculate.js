@@ -4,14 +4,17 @@
  */
 
 function calculate(answer, input) {
-  const result = { S: 0, B: 0 };
+  const count = { S: 0, B: 0 };
+  let gameFinished = false;
 
   for (let i = 0; i < 3; i += 1) {
-    if (answer[i] === input[i]) result.S += 1;
-    else if (answer.includes(input[i])) result.B += 1;
+    if (answer[i] === input[i]) count.S += 1;
+    else if (answer.includes(input[i])) count.B += 1;
   }
 
-  return `${result.S}S ${result.B}B`;
+  if (count.S === 3) gameFinished = true;
+  const result = `${count.S}S ${count.B}B`;
+  return { gameFinished, result };
 }
 
 export default calculate;

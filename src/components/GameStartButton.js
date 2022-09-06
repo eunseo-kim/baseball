@@ -1,6 +1,6 @@
 import Component from '../core/Component';
 
-export default class StartGame extends Component {
+export default class GameStartButton extends Component {
   template() {
     return `
       <button

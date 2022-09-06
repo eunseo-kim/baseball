@@ -1,7 +1,8 @@
 import Component from './core/Component';
 import InputField from './components/InputField';
 import History from './components/History';
-import StartGame from './components/StartGame';
+import GameStartButton from './components/GameStartButton';
+import GameRestartButton from './components/GameRestartButton';
 
 import randomNumber from './services/randomNumber';
 import calculate from './services/calculate';
@@ -19,7 +20,9 @@ export default class App extends Component {
 
   initialize() {
     this.state = {
+      tryCount: 0,
       gameStarted: false,
+      gameFinished: false,
       answer: randomNumber(),
       numbers: [],
       results: [],
@@ -27,13 +30,23 @@ export default class App extends Component {
   }
 
   mounted() {
-    const { gameStarted } = this.state;
+    const {
+      gameStarted, gameFinished, tryCount, answer,
+    } = this.state;
 
     const startGame = document.getElementById('start-game');
-    const gameContainer = document.getElementById('game-container');
     const inputContainer = document.getElementById('input-container');
     const tableContainer = document.getElementById('table-container');
     const { numbers, results } = this.state;
+
+    if (gameFinished) {
+      new GameRestartButton(startGame, {
+        restartGame: this.restartGame.bind(this),
+        tryCount,
+        answer,
+      });
+      return;
+    }
 
     if (gameStarted) {
       new InputField(inputContainer, {
@@ -47,7 +60,7 @@ export default class App extends Component {
       return;
     }
 
-    new StartGame(startGame, {
+    new GameStartButton(startGame, {
       startGame: this.startGame.bind(this),
     });
   }
@@ -81,16 +94,26 @@ export default class App extends Component {
   }
 
   handleClick(value) {
-    const newResult = calculate(this.state.answer, value);
+    const { tryCount } = this.state;
+    const { gameFinished, result } = calculate(this.state.answer, value);
+
     const newState = {
       numbers: [...this.state.numbers, value],
-      results: [...this.state.results, newResult],
+      results: [...this.state.results, result],
+      gameFinished,
+      tryCount: tryCount + 1,
     };
     this.setState(newState);
   }
 
   startGame() {
     const newState = { gameStarted: true };
+    this.setState(newState);
+  }
+
+  restartGame() {
+    const newState = { gameFinished: false, gameStarted: true };
+    this.initialize();
     this.setState(newState);
   }
 }
