@@ -7,13 +7,17 @@ import GameRestartButton from './components/GameRestartButton';
 import randomNumber from './services/randomNumber';
 import calculate from './services/calculate';
 
+import './style/main.css';
+
 export default class App extends Component {
   template() {
     return `
       <div id='game-container'>
+        <div id='logo-icon'>⚾</div>
+        <div id='logo-text'>Bulls and Cows</div>
         <div id='start-game'></div>
         <div id='input-container'></div>
-        <table id='table-container'></table>
+        <div id='table-container'></div>
       </div>
     `;
   }
@@ -81,6 +85,7 @@ export default class App extends Component {
         || value.length > this.MAX_INPUT_LENGTH
         || previousInput.includes(currentInput)
         || currentInput === '0'
+        || currentInput === ' '
     ) { $inputField.value = previousInput; }
   }
 

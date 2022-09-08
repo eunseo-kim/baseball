@@ -7,7 +7,7 @@ export default class GameStartButton extends Component {
         id='start-button'
         type='button'
       >
-      시작하기
+      Start Game!
       </button>    
     `;
   }

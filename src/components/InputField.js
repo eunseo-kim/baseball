@@ -1,19 +1,23 @@
 import Component from '../core/Component';
 
+import '../style/inputfield.css';
+
 export default class InputField extends Component {
   template() {
     return `
-      <input 
-        id='input-field'
-        placeholder='1~9까지의 숫자를 중복없이 3개 입력해주세요.'
-      />
-      <button
-        type='button'
-        id='input-button'
-        disabled=true
-      >
-      입력
-      </button>
+      <div id='input-wrapper'>
+        <input 
+          id='input-field'
+          placeholder='1~9까지의 숫자를 중복없이 3개 입력해주세요.'
+        />
+        <button
+          type='button'
+          id='input-button'
+          disabled=true
+        >
+        ENTER
+        </button>
+      </div>
     `;
   }
 

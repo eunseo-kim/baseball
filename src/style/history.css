@@ -1,0 +1,30 @@
+#history-wrapper {
+    padding: 10px 10px 0px 10px;
+    width: 90%;
+    max-height: 38vh;
+    margin: 0 auto;
+    margin-bottom: 35px;
+    text-align: center;
+    display: flex;
+    overflow-y: auto;
+    flex-direction: column-reverse;
+}
+
+#history-table {
+    width: 100%;
+}
+
+#history-wrapper th{
+    background: #564dc9;
+    padding: 5px;
+    color: white;
+}
+
+#history-wrapper td {
+    padding: 5px;
+    border-bottom: 0.5px solid lightgray;
+}
+
+#history-wrapper td:first-child {
+    border-right: 0.5px solid lightgray;
+}

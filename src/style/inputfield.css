@@ -1,0 +1,34 @@
+#input-wrapper {
+    display: flex;
+    height: 30px;
+    padding: 15px 20px;
+}
+
+#input-field {
+    flex: 5;
+    padding: 5px;
+    margin-right: 10px;
+    border-bottom: 1px solid lightgray;
+}
+
+#input-field:focus {
+    border-bottom: 1px solid gray;
+}
+
+#input-button {
+    flex: 1;
+    padding: 0 8px;
+    background: #564dc9;
+    color: white;
+    font-weight: bold;
+    border-radius: 2px;
+}
+
+#input-button:hover {
+    cursor: pointer;
+}
+
+#input-button:disabled {
+    cursor: default;
+    background: lightgray;
+}

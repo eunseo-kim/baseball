@@ -1,0 +1,18 @@
+* {
+    margin: 0;
+    padding: 0;
+    border: none;
+}
+
+input{
+    outline: none;
+}
+
+table {
+    border: none;
+    border-collapse: collapse;
+}
+
+body {
+    background: #564dc9;
+}

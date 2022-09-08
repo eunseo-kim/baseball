@@ -5,13 +5,13 @@ export default class GameRestartBurron extends Component {
     const { answer, tryCount } = this.props;
 
     return `
-      <div id='answer'>정답은 ${answer}</div>
-      <div id='congrats'>축하합니다. ${tryCount}번만에 성공하셨네요</div>
+      <div id='answer'>The answer is [${answer}]</div>
+      <div id='congrats'>Number of Attempts: ${tryCount}</div>
       <button
         id='restart-button'
         type='button'
       >
-      다시 시작하기
+      Restart
       </button>
     `;
   }
