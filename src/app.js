@@ -95,7 +95,7 @@ export default class App extends Component {
     const previousInput = value.substr(0, value.length - 1);
 
     this.checkInputValidation($inputField, currentInput, previousInput);
-    this.checkButtonDisabled($inputButton, value.length);
+    this.checkButtonDisabled($inputButton, $inputField.value.length);
   }
 
   handleClick(value) {
